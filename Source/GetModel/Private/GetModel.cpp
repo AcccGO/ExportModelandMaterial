@@ -168,11 +168,11 @@ FReply FGetModelModule::ExportMergeObj()
 
 void FGetModelModule::GetObjandMaterialMethod(bool bExport)
 {
-	//GetSelectedActors();
 	TArray<AActor*> Actors;
 	TArray<UPrimitiveComponent*> Components;
 
 	GWarn->BeginSlowTask(NSLOCTEXT("UnrealEd", "ExportingOBJandMaterial", "Exporting Material and OBJ"), true);
+
 	{
 		USelection* SelectedActors = GEditor->GetSelectedActors();
 		for (FSelectionIterator Iter(*SelectedActors); Iter; ++Iter)
@@ -226,7 +226,6 @@ void FGetModelModule::GetObjandMaterialMethod(bool bExport)
 		}
 	}
 
-	//for (auto Component : Components)
 	for (int32 Index = 0; Index < Components.Num(); Index++)
 	{
 		GWarn->StatusUpdate(Index, Components.Num(), NSLOCTEXT("UnrealEd", "ExportingOBJandMaterial", "Exporting Material and OBJ"));
@@ -244,8 +243,7 @@ void FGetModelModule::GetObjandMaterialMethod(bool bExport)
 		settings.MaterialSettings.bOpacityMap = bOpacityMap->IsChecked();
 		settings.MaterialSettings.bOpacityMaskMap = bOpacityMap->IsChecked();
 		settings.MaterialSettings.bEmissiveMap = bEmissiveMap->IsChecked();
-		settings.bIncludeImposters = false;
-		//settings.MaterialSettings.bAmbientOcclusionMap = true;
+		settings.bIncludeImposters = true;
 		settings.MaterialSettings.BlendMode = BLEND_Masked;
 		settings.MaterialSettings.TextureSize = FIntPoint(TextureSizeX->GetValue(), TextureSizeY->GetValue());
 		settings.bPivotPointAtZero = false;
@@ -256,7 +254,12 @@ void FGetModelModule::GetObjandMaterialMethod(bool bExport)
 
 		// Merge...
 		{
-			FScopedSlowTask SlowTask(0, LOCTEXT("MergingActorsSlowTask", "Merging actors..."));
+			//path
+			FString ProjectPath = "/Game/GetObjandMaterial/materials/";
+			FString ComponentName = FPackageName::GetShortName(Cast<UStaticMeshComponent>(Component)->GetStaticMesh()->GetOutermost()->GetName());
+
+			FText T = FText::FromString(TEXT("Merging ") + ComponentName + TEXT("..."));
+			FScopedSlowTask SlowTask(0, T);
 			SlowTask.MakeDialog();
 
 			UWorld* World = Component->GetWorld();
@@ -270,10 +273,6 @@ void FGetModelModule::GetObjandMaterialMethod(bool bExport)
 			//get lod
 			UStaticMeshComponent* StaticMeshComponent = Cast<UStaticMeshComponent>(Component);
 			auto ModelTransfom = StaticMeshComponent->GetRelativeTransform();
-
-			//path
-			FString ProjectPath = "/Game/GetObjandMaterial/materials/";
-			FString ComponentName = FPackageName::GetShortName(Cast<UStaticMeshComponent>(Component)->GetStaticMesh()->GetOutermost()->GetName());
 
 			int32 LOD_index;
 			for (LOD_index = 0; LOD_index < StaticMeshComponent->GetStaticMesh()->GetNumLODs(); ++LOD_index)
@@ -556,7 +555,7 @@ TMap<FString, FString> FGetModelModule::ExportMaterialToBMP(TArray<UObject*>& Ob
 		//UExporter::ExportToFileEx(Params);
 		UExporter::ExportToFile(ObjectToExport, ExporterUse, *Filename, false, false, false);
 	}
-	//ObjectsToExport.Empty();
+
 	return mtls;
 }
 

@@ -234,7 +234,7 @@ void FGetModelModule::GetObjandMaterialMethod(bool bExport)
 		FMeshMergingSettings settings;
 		settings.bUseVertexDataForBakingMaterial = bUseVertexDataForBakingMaterial->IsChecked();
 		settings.LODSelectionType = EMeshLODSelectionType::SpecificLOD;
-		settings.bMergeMaterials = bMergeMaterials->IsChecked();
+		settings.bMergeMaterials = true/*bMergeMaterials->IsChecked()*/;
 		settings.bMergePhysicsData = bMergePhysicsData->IsChecked();
 		settings.MaterialSettings.bNormalMap = bNormalMap->IsChecked();
 		settings.MaterialSettings.bMetallicMap = bMRSMap->IsChecked();
@@ -492,9 +492,6 @@ TMap<FString, FString> FGetModelModule::ExportMaterialToBMP(TArray<UObject*>& Ob
 
 		name = name.Replace(TEXT(" - "), TEXT("_")).Replace(TEXT("-"), TEXT("_"));
 
-		//name = name.Replace(TEXT("_Diffuse"), TEXT(""))
-		//	/*.Replace(TEXT("_MRS"), TEXT(""))*/
-		//	.Replace(TEXT("_Normal"), TEXT(""));
 
 		FString Filename = TEXT("maps/") + name;
 
@@ -533,26 +530,7 @@ TMap<FString, FString> FGetModelModule::ExportMaterialToBMP(TArray<UObject*>& Ob
 		T = Filename;
 
 		Filename = ProjectPath + TEXT("GetObjandMaterial/") + Filename;
-		//FString Filename = ProjectPath+ TEXT("GetMaterial/")+ObjectToExport->GetName()+ TEXT(".bmp");
 
-		//UAssetExportTask Params;
-		////UExporter::FExportToFileParams Params;
-		//Params.Object = ObjectToExport;
-		////Params.Exporter = ExporterToUse;
-		//Params.Exporter = ExporterUse;
-		////Params.Filename = *SaveFileName;
-		//Params.Filename = *Filename;
-		//Params.bSelected = false;
-		////Params.InSelectedOnly = false;
-		//Params.bReplaceIdentical = true;
-		////Params.NoReplaceIdentical = false;
-		//Params.bPrompt = false;
-		////Params.Prompt = false;
-		//Params.bUseFileArchive = ObjectToExport->IsA(UPackage::StaticClass());
-		//Params.bWriteEmptyFiles = false;
-		//Params.WriteEmptyFiles = false;
-		//UExporter::RunAssetExportTask(&Params);
-		//UExporter::ExportToFileEx(Params);
 		UExporter::ExportToFile(ObjectToExport, ExporterUse, *Filename, false, false, false);
 	}
 
@@ -672,30 +650,30 @@ TSharedRef<SDockTab> FGetModelModule::OnSpawnPluginTab(const FSpawnTabArgs& Spaw
 			.Text(FText::FromString(TEXT("Merge Physics Data")))
 		]
 		]
-	//checkbox merge materials
-	+ SScrollBox::Slot().Padding(10, 5)
-		[
-			SNew(SHorizontalBox)
-			+ SHorizontalBox::Slot()
-		//.AutoWeight()
-		.HAlign(HAlign_Center)
-		.Padding(4, 4, 10, 4)
-		.AutoWidth()
-		[
-			//SNew(SButton)
-			SAssignNew(bMergeMaterials, SCheckBox)
-			.ToolTipText(FText::FromString(TEXT("Merge Materials"))).IsChecked(ECheckBoxState::Checked)
+	// //checkbox merge materials
+	// + SScrollBox::Slot().Padding(10, 5)
+	// 	[
+	// 		SNew(SHorizontalBox)
+	// 		+ SHorizontalBox::Slot()
+	// 	//.AutoWeight()
+	// 	.HAlign(HAlign_Center)
+	// 	.Padding(4, 4, 10, 4)
+	// 	.AutoWidth()
+	// 	[
+	// 		//SNew(SButton)
+	// 		SAssignNew(bMergeMaterials, SCheckBox)
+	// 		.ToolTipText(FText::FromString(TEXT("Merge Materials"))).IsChecked(ECheckBoxState::Checked)
 
-		]
-	+ SHorizontalBox::Slot()
-		.AutoWidth()
-		.HAlign(HAlign_Left)
-		.Padding(4, 4, 10, 4)
-		[
-			SNew(STextBlock)
-			.Text(FText::FromString(TEXT("Merge Materials")))
-		]
-		]
+	// 	]
+	// + SHorizontalBox::Slot()
+	// 	.AutoWidth()
+	// 	.HAlign(HAlign_Left)
+	// 	.Padding(4, 4, 10, 4)
+	// 	[
+	// 		SNew(STextBlock)
+	// 		.Text(FText::FromString(TEXT("Merge Materials")))
+	// 	]
+	// 	]
 	//checkbox n
 	+ SScrollBox::Slot().Padding(10, 5)
 		[

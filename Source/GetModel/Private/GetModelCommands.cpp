@@ -6,7 +6,7 @@
 
 void FGetModelCommands::RegisterCommands()
 {
-	UI_COMMAND(OpenPluginWindow, "GetModel", "Bring up GetModel window", EUserInterfaceActionType::Button, FInputGesture());
+    UI_COMMAND(OpenPluginWindow, "GetModel", "Bring up GetModel window", EUserInterfaceActionType::Button, FInputGesture());
 }
 
 #undef LOCTEXT_NAMESPACE

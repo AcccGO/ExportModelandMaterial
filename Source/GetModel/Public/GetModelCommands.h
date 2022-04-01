@@ -9,15 +9,14 @@
 class FGetModelCommands : public TCommands<FGetModelCommands>
 {
 public:
+    FGetModelCommands()
+        : TCommands<FGetModelCommands>(TEXT("GetModel"), NSLOCTEXT("Contexts", "GetModel", "GetModel Plugin"), NAME_None, FGetModelStyle::GetStyleSetName())
+    {
+    }
 
-	FGetModelCommands()
-		: TCommands<FGetModelCommands>(TEXT("GetModel"), NSLOCTEXT("Contexts", "GetModel", "GetModel Plugin"), NAME_None, FGetModelStyle::GetStyleSetName())
-	{
-	}
-
-	// TCommands<> interface
-	virtual void RegisterCommands() override;
+    // TCommands<> interface
+    virtual void RegisterCommands() override;
 
 public:
-	TSharedPtr< FUICommandInfo > OpenPluginWindow;
+    TSharedPtr<FUICommandInfo> OpenPluginWindow;
 };

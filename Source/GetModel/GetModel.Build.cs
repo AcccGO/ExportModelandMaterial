@@ -17,14 +17,14 @@ public class GetModel : ModuleRules
                 //"GetModel/Public"
 				// ... add public include paths required here ...
 			}
-            );
+        );
 
         PrivateIncludePaths.AddRange(
             new string[] {
                 //"GetModel/Private"
 				// ... add other private include paths required here ...
 			}
-            );
+        );
 
         PublicIncludePathModuleNames.AddRange(
             new string[] {
@@ -32,7 +32,7 @@ public class GetModel : ModuleRules
                "MeshUtilities",
                "MeshReductionInterface",
             }
-            );
+        );
 
         PrivateIncludePathModuleNames.AddRange(
             new string[] {
@@ -49,7 +49,7 @@ public class GetModel : ModuleRules
                 "WorkspaceMenuStructure",
                 "MeshMergeUtilities",
             }
-            );
+        );
 
         PublicDependencyModuleNames.AddRange(
             new string[]
@@ -64,7 +64,7 @@ public class GetModel : ModuleRules
                 "MeshDescription",
                 "MeshDescriptionOperations"
             }
-            );
+        );
 
         PrivateDependencyModuleNames.AddRange(
             new string[]
@@ -92,7 +92,7 @@ public class GetModel : ModuleRules
                 "MeshUtilitiesCommon",
                 "EditorStyle",
             }
-            );
+        );
 
         DynamicallyLoadedModuleNames.AddRange(
             new string[]
@@ -104,6 +104,6 @@ public class GetModel : ModuleRules
                 "ContentBrowser",
                 "Documentation",
             }
-            );
+        );
     }
 }
